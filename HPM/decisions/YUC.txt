@@ -1,0 +1,248 @@
+political_decisions = {
+# Additional decision for Yucatan 
+
+    aid_against_Mexicans_and_Mayans = {
+        # picture = aid_against_Mexicans_and_Mayans
+        potential = {
+            tag = YUC
+
+            NOT = { has_country_flag = begin_US_negotiations }
+            has_country_flag = support_US
+
+            exists = USA
+            USA = { 
+                government = democracy 
+                war_with = MEX
+            }
+
+            OR = {
+                is_vassal = no
+                vassal_of = USA
+            }
+            OR = {
+                part_of_sphere = no
+                in_sphere = USA
+            }         
+            OR = {
+                year = 1845
+                exists = MAY
+            }    
+            OR = {
+                YUC = { war_with = MEX }
+                YUC = { war_with = MAY }
+                USA = { war_with = MEX }
+            }         
+        }
+
+        allow = {
+
+            NOT = { truce_with = USA }
+            USA = { NOT = { num_of_revolts = 1 } }
+             
+            OR = { 
+                has_country_flag = mayan_agitation
+                war_with = MAY
+            }
+
+            relation = {
+                who = USA
+                value = 10
+            }
+        }
+
+        effect = {
+            set_country_flag = begin_US_negotiations
+            USA = {
+                country_event = 16402
+            }
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    request_mexican_negotiations {
+        potential = {
+            tag = YUC
+        
+            NOT = { has_country_flag = rejoin_mex_negotiations }
+            has_country_flag = support_Mex
+
+            NOT = { war_with = MAY }
+            OR = {
+                part_of_sphere = no
+                in_sphere = MEX
+            }
+            government = democracy
+
+            exists = MEX
+            MEX = { 
+                OR = {
+                    government = democracy 
+                    government = hms_government
+                }
+            }
+
+            year = 1845
+
+         allow = {
+            NOT = { truce_with = MEX }
+            MEX = { NOT = { num_of_revolts = 1 } }
+            relation = {
+                who = MEX
+                value = 10
+            } 
+        }
+
+        effect = {
+            set_country_flag = rejoin_mex_negotiations
+            MEX = { country_event = 16411 }
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    beg_for_US_intervention = {
+        # picture = aid_against_Mexicans_and_Mayans
+        potential = {
+            tag = YUC
+
+            has_country_flag = begin_US_negotiations
+            NOT = { has_country_flag = beg_US }
+
+            war_with = MAY 
+
+            OR = {
+                is_vassal = no
+                vassal_of = USA
+            }
+            OR = {
+                part_of_sphere = no
+                in_sphere = USA
+            }
+            
+            exists = USA
+            USA = { 
+                government = democracy 
+                # has_country_flag = gave_yuc_aid
+            }
+        }
+
+        allow = {
+            USA = { 
+                NOT = { average_militancy = 5 badboy = 0.7 } 
+                NOT = { num_of_revolts = 1 }
+                NOT = { truce_with = YUC }
+            }
+            OR = { 
+                YUC = { NOT = { accepted_culture = mayan } }
+                USA = { has_country_flag = native_protection_act_enacted } 
+            }
+            relation = {
+                who = USA
+                value = 10
+            } 
+            war_exhaustion = 30
+        }
+
+        effect = {
+            set_country_flag = beg_US
+            USA = { 
+                create_vassal = THIS
+                create_alliance = THIS
+                country_event = 16406
+            }
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                # Only make offer if country is being occupied
+                factor = 0
+                AND = {
+                    2184 = { controlled_by = YUC } 
+                    2183 = { controlled_by = YUC }
+                }
+            }
+          #  modifier = {
+          #      # Appeal to UCA instead
+          #      factor = 0
+          #      UCA = {
+          #          war = no
+          #          neighbour = THIS
+          #          government = democracy
+          #          is_vassal = no
+          #          NOT = { citizens_rights = primary_culture_only }
+          #          relation = { who = YUC value = 50 }
+          #      }
+          #      OR = { 
+          #          YUC = { NOT = { accepted_culture = mayan } }
+          #          UCA = { has_country_flag = native_protection_act_enacted } 
+          #      } 
+          #  }
+        }
+    }
+
+    beg_for_Mexican_intervention = {
+        potential = {
+            OR = { has_country_flag = support_Mex
+                 has_country_flag = US_rejected
+            }
+            NOT = { has_country_flag = beg_Mex }
+
+            exists = MEX
+            tag = YUC
+            YUC = { war_with = MAY }
+
+            OR = {
+                part_of_sphere = no
+                in_sphere = MEX
+            }
+
+            is_vassal = no
+        }
+
+        allow = {
+            war_exhaustion = 50
+
+        }
+
+        effect = {
+            set_country_flag = beg_MEX
+            MEX = {
+                country_event = 16413
+            }
+        }
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                # Only make offer if country is being occupied
+                factor = 0
+                AND = {
+                    2184 = { controlled_by = YUC } 
+                    2183 = { controlled_by = YUC }
+                }
+            }
+           # modifier = {
+             #   # Appeal to UCA instead
+             #   factor = 0
+             #   UCA = {
+             #       war = no
+             #       neighbour = THIS
+             #       government = democracy
+             #       is_vassal = no
+             #       NOT = { citizens_rights = primary_culture_only }
+             #       relation = { who = YUC value = 50 }
+             #   }
+             #   OR = { 
+             #       YUC = { NOT = { accepted_culture = mayan } }
+             #       UCA = { has_country_flag = native_protection_act_enacted } 
+             #   } 
+           # }
+        }
+    }
+}
+  

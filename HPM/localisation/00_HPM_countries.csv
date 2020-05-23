@@ -2678,8 +2678,8 @@ YAP_ADJ;Yapese;Yapese;Yapese;;;;;;;;;;;
 YNN_presidential_dictatorship;Yunnan Clique;Clique de Yunnan;Yunnan-Clique;;;;;;;;;;;
 YUC;Yucatan;;;;;;;;;;;;;
 YUC_ADJ;Yucatecan;;;;;;;;;;;;;
-YUC_conservative;Partido Conservador;Partido Conservador;Partido Conservador;;;;;;;;;;;
-YUC_liberal;Partido Liberal;Partido Liberal;Partido Liberal;;;;;;;;;;;
+YUC_conservative;Méndez Facción;Méndez Facción;Méndez Facción;;;;;;;;;;;
+YUC_liberal;Barbachano Facción;Barbachano Facción;Barbachano Facción;;;;;;;;;;;
 YUC_reactionary;Partido Nationalist;Partido nationaliste;Partido Nationalist;;;;;;;;;;;
 YUC_anarcho_liberal;Partido Radical;Partido Radical;Partido Radical;;;;;;;;;;;
 YUC_socialist;Partido Socialist;Partido socialiste;Partido Socialist;;;;;;;;;;;
@@ -3233,3 +3233,5 @@ TIG_socialist;Tigrayan People's Liberation Front;Front de libération du Tigrayie
 TIG_communist;Tigrayan Communist Party;Tigrayienne Parti communiste;Tigrayan Kommunistischen Partei;;;;;;;;;;;
 TIG_fascist;Fascist Faction;Faction fasciste;Die faschistische Fraktion;;;;;;;;;;;
 UTI_ADJ;Territories Exchange;;;;;;;;;;;;;
+MAY;Maya;;;;;;;;;;;;;
+MAY_ADJ;Mayan;;;;;;;;;;;;;

@@ -1,0 +1,748 @@
+# TODO - see if possible to use country modifiers for militancy/consciousness over time for agitate mayans
+# Add random province event that fires b/w agitate Mayans & Caste War
+# Add Caste War country modifier
+# Add event for Mayans to gain soldiers during war
+# Caste War country modifier to be inherted by either US or Mex if either inherits war
+# Finish fixing pictures
+# Add mayan names for parties, ect
+# Make code pretty
+# Final check
+# Mayan flavor - Chan Santa Cruz religious movement decision once war moves to US or MEX
+
+# Yucatan Caste War
+
+# Caste War event
+country_event = {
+    id = 44824
+    title ="EVTNAME44824"
+    desc = "EVTDESC44824"
+    picture = "mexico_soldiers"
+
+    major = yes
+    fire_only_once = yes
+
+    trigger = {
+        tag = YUC
+        NOT = { exists = MAY }
+        has_country_flag = mayan_agitation
+    }
+
+    mean_time_to_happen = {
+        months = 10
+    }
+
+    option = {
+        name = "EVTOPTA44824"
+                
+        2185 = { secede_province = MAY }
+          
+        # Historical British support of Mayans against Yucatans from Belize
+        MAY = {
+            any_pop = { militancy = -6 }
+            relation = {
+                who = ENG
+                value = 50
+            }
+        }
+        war = {
+            target = MAY
+            attacker_goal = {
+                casus_belli = annex_core_country
+            }
+            defender_goal = {
+                casus_belli = annex_core_country
+            }
+        }
+        remove_accepted_culture = mayan
+        ai_chance = {
+            factor = 100
+        }
+    }   
+   
+    option = {
+        name = "EVTOPTB44824"
+                
+        2185 = { secede_province = MAY }
+          
+        # Historical British support of Mayans against Yucatans from Belize
+        MAY = {
+            any_pop = { militancy = -6 }
+            relation = {
+                who = ENG
+                value = 50
+            }
+        }
+        war = {
+            target = MAY
+            attacker_goal = {
+                casus_belli = annex_core_country
+            }
+            defender_goal = {
+                casus_belli = annex_core_country
+            }
+        }
+        remove_accepted_culture = mayan
+        change_tag_no_core_switch = MAY
+    }
+}
+
+# Agitation amongst Mayans event
+country_event = {
+    id = 44828
+    title ="EVTNAME44828"
+    desc = "EVTDESC44828"
+    picture = "19th_century_mayans_chan_santa_cruz"
+
+    trigger = {
+        OR = { # Owns any yucatan provinces
+            owns = 2183 
+            owns = 2184
+            owns = 2185
+        }
+        NOT = { primary_culture = mayan }
+        NOT = { has_country_flag = mayan_agitation }
+        AND = { 
+            year = 1845
+            NOT = { year = 1870 }
+        }
+        OR = { 
+            war = yes
+            MEX = { war_with = USA }
+        }
+    }   
+ 
+    mean_time_to_happen = { months = 1 }
+     
+    option = {
+        name = "EVTOPTA44828"
+        any_owned = {
+            limit = {
+                pop_majority_culture = mayan
+            }
+            add_core = MAY
+            any_pop {
+                limit = {
+                    has_pop_culture = mayan
+                }
+                consciousness = 1.5
+                militancy = 2.5
+            }
+        }
+        set_country_flag = mayan_agitation
+         
+        ai_chance = {
+            factor = 100
+        }
+    }
+}
+
+
+# US - Yucatan negotiates for aid 
+country_event = {
+    id = 16402
+    title = "EVTNAME16402"
+    desc = "EVTDESC16402"
+    picture = "Administration"
+
+    is_triggered_only = yes
+
+    option = {
+        name = "EVTOPTA16402" # Do not help the Yucatan
+        # set_country_flag = no_aid
+        YUC = {
+            country_event = 16403
+        }
+        ai_chance = { factor = 20 }
+    }
+
+    option = {
+        name = "EVTOPTB16402" # Offer some aid, armaments
+        set_country_flag = gave_yuc_aid
+        USA = {
+            war_exhaustion = 0.25
+            treasury = -1000
+            ammunition = -100
+            canned_food = -150
+            small_arms = -150
+            fish = -100
+            fruit = -100
+            wool = -100
+            grain = -250
+            cattle = -75
+        }
+        
+        YUC = { country_event = 16404 }
+        ai_chance = { factor = 50} 
+    }
+    option = {
+        name = "EVTOPTC16402" # Offer armaments and significant gold
+        set_country_flag = gave_yuc_aid
+        USA = {
+            war_exhaustion = 0.5
+            treasury = -5000
+            ammunition = -500
+            canned_food = -750
+            small_arms = -750
+            fish = -500
+            fruit = -500
+            wool = -500
+            grain = -1250
+            cattle = -375
+        }
+ 
+        YUC = { country_event = 16405 } 
+        ai_chance = { factor = 30 }
+    }
+}
+
+
+#Yucatan, no aid
+country_event = {
+    id = 16403
+    title = "EVTNAME16403"
+    desc = "EVTDESC16403"
+    picture = "Administration"
+
+    is_triggered_only = yes
+
+    option = {
+        name = "EVTOPTA16403"
+        prestige = -10
+        war_exhaustion = 5
+        relation = {
+            who = FROM
+            value = -40
+        }
+    }
+}
+
+# Yucatan, offered aid
+country_event = {
+    id = 16404
+    title = "EVTNAME16404"
+    desc = "EVTDESC16404"
+    picture = "Administration"
+
+    is_triggered_only = yes
+
+    option = { # Accept aid
+        name = "EVTOPTA16404"
+        YUC = {
+            treasury = 1000
+            ammunition = 100
+            canned_food = 150
+            small_arms = 150
+            fish = 100
+            fruit = 100
+            wool = 100
+            grain = 250
+            cattle = 75
+        }
+        prestige = 5
+        war_exhaustion = -2
+        relation = {
+            who = FROM
+            value = 40
+        }
+    }
+}
+
+# Yucatan, offered large aid
+country_event = {
+    id = 16405
+    title = "EVTNAME16405"
+    desc = "EVTDESC16405"
+    picture = "Administration"
+
+    is_triggered_only = yes
+
+    option = { # Accept aid
+        name = "EVTOPTA16405"
+        YUC = {
+            treasury = 5000
+            ammunition = 500
+            canned_food = 750
+            small_arms = 750
+            fish = 500
+            fruit = 500
+            wool = 500
+            grain = 1250
+            cattle = 375
+        }
+        prestige = 10
+        war_exhaustion = -4
+        relation = {
+            who = FROM
+            value = 80
+        }
+    }
+}
+
+# The Yucatan Bill
+country_event = {
+    id = 16406
+    title = "EVTNAME16406"
+    desc = "EVTDESC16406"
+    picture = "Administration"
+
+    is_triggered_only = yes
+    major = yes
+     
+    # Intervene in YUC-MAY war in exchange for YUC annexation
+    option = { 
+        name = "EVTOPTA16406"
+        war_exhaustion = 5
+        any_pop = { consciousness = 2 }
+        FROM = { all_core = { add_core = THIS } }
+        inherit = FROM
+        war = {
+            target = MAY
+            attacker_goal = {
+                casus_belli = annex_core_country
+            }
+            defender_goal = {
+                casus_belli = acquire_core_state state_province_id = 2184
+            }
+        }
+        ai_chance = { factor = 5 }
+    }
+      
+    # Intervene in YUC-MAY war in exchange for YUC becomes satellite 
+    option = { 
+        name = "EVTOPTB16406"
+        war_exhaustion = 2.5
+        any_pop = { consciousness = 1 }
+        set_country_flag = will_intervene
+         
+        THIS = { 
+            diplomatic_influence {  
+                who = FROM
+                value = 200
+            }
+            relation = { 
+                who = FROM 
+                value = 200
+            }
+        }
+         
+        war = {
+            target = MAY
+            attacker_goal = {
+                casus_belli = free_allied_cores
+                country = YUC
+                state_province_id = 2185
+            }
+            defender_goal = {       
+            }
+            call_ally = yes
+        }
+        FROM = { country_event = 16407 }
+        ai_chance = { factor = 10 }
+    }
+
+    # Ignore war
+    option = {
+        name = "EVTOPTC16406"
+        THIS = { 
+            diplomatic_influence {  
+                who = FROM
+                value = -100
+            }
+            relation = { 
+                who = FROM 
+                value = -100
+            }
+        }
+        leave_alliance = FROM
+        release_vassal = FROM           
+
+        FROM = { 
+            war = {
+                target = MAY
+                attacker_goal = {
+                    casus_belli = annex_core_country
+                }
+                defender_goal = {
+                    casus_belli = annex_core_country
+                }
+            }
+            country_event = 16408
+        }
+        ai_chance = { factor = 85 }
+        FROM = { set_country_flag = US_rejected }
+    }
+}
+
+# Yucatan, accepted satellite of US
+country_event = {
+     id = 16407
+     title = "EVTNAME16407"
+     desc = "EVTDESC16407"
+     picture = "Administration"
+
+     is_triggered_only = yes
+
+     option = { 
+         name = "EVTOPTA16407"
+         war_exhaustion = -15
+         prestige = -25
+     }
+}
+
+# Yucatan, US did not intervene
+country_event = {
+    id = 16408
+    title = "EVTNAME16408"
+    desc = "EVTDESC16408"
+    picture = "Administration"
+
+    is_triggered_only = yes
+
+    option = {
+        name = "EVTOPTA16408"
+        war_exhaustion = 15
+        prestige = -50
+        capital = 2183
+        upper_house = {
+	    ideology = liberal
+	    value = 0.8
+        }
+    }
+}   
+
+# MEX or US?
+country_event = {
+    id = 16409
+    title = "EVTNAME16409"
+    desc = "EVTDESC16409"
+
+    fire_only_once = yes
+    major = yes
+
+    trigger = {
+        tag = YUC
+        USA = { war_with = MEX }
+        OR = {
+            MEX = { ruling_party = MEX_liberal }
+            MEX = { ruling_party = MEX_conservative }
+        }
+    }
+     
+    mean_time_to_happen = {
+        days = 1
+    }      
+
+    option = {
+        name = "EVTOPTA16409"
+        set_country_flag = support_US
+        capital = 2184
+        relation = {
+            who = USA
+            value = 50
+        }
+        relation = {
+            who = MEX
+            value = -50
+        }
+        MEX = { 
+            diplomatic_influence = {  
+                who = THIS
+                value = -200
+            }
+        }
+        upper_house = {
+	    ideology = conservative
+	    value = 0.4
+        }
+        ai_chance = { factor = 90 }
+     }
+     
+     option = {
+         name = "EVTOPTB16409"
+         set_country_flag = support_Mex
+         relation = {
+             who = USA 
+             value = -50
+         }
+         relation = {
+             who = MEX
+             value = 50
+         }
+         USA = { 
+             diplomatic_influence = {  
+                 who = THIS
+                 value = -200
+             }
+        }
+        upper_house = {
+	    ideology = liberal
+	    value = 0.4
+        }
+          
+        ai_chance = { factor = 10 }
+    }
+}
+
+# Mex still Centralist
+country_event = {
+    id = 16419
+    title = "EVTNAME16409"
+    desc = "EVTDESC16409"
+
+    fire_only_once = yes
+    major = yes
+
+    trigger = {
+        tag = YUC
+        USA = { war_with = MEX }
+        AND = {
+            NOT = {MEX = { ruling_party = MEX_liberal } }
+            NOT = {MEX = { ruling_party = MEX_conservative } }
+        }
+    }   
+     
+    mean_time_to_happen = {
+        days = 1
+    }      
+
+    option = {
+        name = "EVTOPTA16409"
+        set_country_flag = support_US
+        capital = 2184
+        relation = {
+            who = USA
+            value = 50
+        }
+        relation = {
+            who = MEX
+            value = -50
+        }
+        MEX = { 
+            diplomatic_influence = {  
+                who = THIS
+                value = -200
+            }
+        }
+        upper_house = {
+	    ideology = conservative
+	    value = 0.4
+        }
+        ai_chance = { factor = 100 }
+    }   
+}
+
+# Mexico receives request to join as satellite
+country_event = {
+    id = 16411
+    title = "EVTNAME16411"
+    desc = "EVTDESC16411"
+
+    fire_only_once = yes
+    is_triggered_only = yes
+    major = yes   
+     
+    # Accept autonomy
+    option = {
+        name = "EVTOPTA16411"
+        relation = { 
+            who = YUC
+            value = 200
+        }
+        MEX = { create_vassal = YUC }
+        2185 = { secede_province = YUC }
+        2184 = { secede_province = YUC }
+        2183 = { secede_province = YUC }
+        
+        ai_chance = { factor 60 }
+    }
+     
+    # Require full annexation
+    option = {
+        name = "EVTOPTB16411"
+        set_country_flag = yuc_full_integration
+        FROM = { country_event = 16412 }
+        ai_chance = { factor 40 }
+    }
+}
+
+# Respond to Mexican annexation requirement
+country_event = {
+    id = 16412
+    title = "EVTNAME16412"
+    desc = "EVTDESC16412"
+
+    is_triggered_only = yes
+    major = yes
+
+    # Accept annexation
+    option = {
+        name = "EVTOPTA16412"
+
+        FROM = { 
+            inherit = THIS 
+            country_event = 16416 
+        }
+        ai_chance = { factor = 15 }   
+    }
+     
+    # Deny annexation
+    option = {
+        name = "EVTOPTB16412"
+        relation = { 
+            who = MEX
+            value = -50
+        }
+        clr_country_flag = support_Mex
+        set_country_flag = support_US
+
+        capital = 2184
+        relation = {
+            who = USA
+            value = 50
+        }
+        relation = {
+            who = FROM
+            value = -50
+        }
+        FROM = { 
+            diplomatic_influence = {  
+                who = THIS
+                value = -200
+            }
+            country_event = 16417
+        }
+        upper_house = {
+	    ideology = conservative
+	    value = 0.8
+        }
+        ai_chance = { factor = 85 }
+    }
+}
+
+# Yucatan Restoration, Caste War now with Mexico
+country_event = {
+    id = 16413
+    title = "EVTNAME16413"
+    desc = "EVTDESC16413"
+
+    is_triggered_only = yes
+    major = yes
+     
+    # Intervene in YUC-MAY war in exchange for YUC annexation
+    option = { 
+        name = "EVTOPTA16413"
+        war_exhaustion = 2.5
+        inherit = FROM
+        war = {
+            target = MAY
+            attacker_goal = {
+                casus_belli = annex_core_country
+            }
+            defender_goal = {
+                casus_belli = acquire_core_state state_province_id = 2184
+            }
+        }   
+        ai_chance = { factor = 80 }
+    }
+      
+    # Ignore war
+    option = {
+        name = "EVTOPTB16413"
+        THIS = { 
+            diplomatic_influence {  
+                who = FROM
+                value = -100
+            }
+            relation = { 
+                who = FROM 
+                value = -100
+            }
+        }   
+        leave_alliance = FROM       
+        FROM = { 
+            country_event = 16414
+            set_country_flag = Mex_rejected 
+        }
+        ai_chance = { factor = 10 }
+    }   
+}
+
+# Yucatan - Mexico denied intervention
+country_event = {
+    id = 16414
+    title = "EVTNAME16414"
+    desc = "EVTDESC16414"
+    picture = "Administration"
+
+    is_triggered_only = yes
+
+    option = { 
+        name = "EVTOPTA16414"
+        war_exhaustion = -15
+        prestige = -25
+    }
+}
+
+# Mexico - Yucutan accepted annexation
+country_event = {
+    id = 16416
+    title = "EVTNAME16416"
+    desc = "EVTDESC16416"
+    picture = "Administration"
+
+    is_triggered_only = yes
+
+    option = { 
+        name = "EVTOPTA16416"
+        war_exhaustion = -5
+        prestige = 10
+    }
+}
+
+# Mexico - Yucatan denied annexation
+country_event = {
+    id = 16417
+    title = "EVTNAME16417"
+    desc = "EVTDESC16417"
+    picture = "Administration"
+
+    is_triggered_only = yes
+
+    option = { 
+        name = "EVTOPTA16417"
+        prestige = -10
+    }
+}
+
+country_event = {
+    id = 16418
+    title = "EVTNAME16418"
+    desc = "EVTDESC16418"
+    picture = "Administration"
+
+    fire_only_once = yes
+     
+    trigger = {
+        tag = MAY
+        war_with = YUC
+    }
+    mean_time_to_happen = {
+        days = 3
+    }
+
+    option = {
+        name = "EVTOPTA16418"
+        iron = 100
+        wool = 100
+        timber = 250
+        small_arms = 100
+        leadership = 20
+        add_country_modifier = {
+            name = small_country_draft
+            duration = 30
+        }
+    }
+}
+     
+
+     
