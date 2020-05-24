@@ -111,7 +111,7 @@ country_event = {
         }
     }   
  
-    mean_time_to_happen = { months = 1 }
+    mean_time_to_happen = { days = 15 }
      
     option = {
         name = "EVTOPTA44828"
@@ -283,7 +283,6 @@ country_event = {
     id = 16406
     title = "EVTNAME16406"
     desc = "EVTDESC16406"
-    picture = "Administration"
 
     is_triggered_only = yes
     major = yes
@@ -324,7 +323,6 @@ country_event = {
                 value = 200
             }
         }
-         
         war = {
             target = MAY
             attacker_goal = {
@@ -422,10 +420,8 @@ country_event = {
     trigger = {
         tag = YUC
         USA = { war_with = MEX }
-        OR = {
-            MEX = { ruling_party = MEX_liberal }
-            MEX = { ruling_party = MEX_conservative }
-        }
+        MEX = { NOT = { government = presidential_dictatorship } }
+        
     }
      
     mean_time_to_happen = {
@@ -486,8 +482,8 @@ country_event = {
 # Mex still Centralist
 country_event = {
     id = 16419
-    title = "EVTNAME16409"
-    desc = "EVTDESC16409"
+    title = "EVTNAME16419"
+    desc = "EVTDESC16419"
 
     fire_only_once = yes
     major = yes
@@ -495,10 +491,7 @@ country_event = {
     trigger = {
         tag = YUC
         USA = { war_with = MEX }
-        AND = {
-            NOT = {MEX = { ruling_party = MEX_liberal } }
-            NOT = {MEX = { ruling_party = MEX_conservative } }
-        }
+        MEX = { government = presidential_dictatorship }
     }   
      
     mean_time_to_happen = {
@@ -506,7 +499,7 @@ country_event = {
     }      
 
     option = {
-        name = "EVTOPTA16409"
+        name = "EVTOPTA16419"
         set_country_flag = support_US
         capital = 2184
         relation = {
@@ -738,11 +731,14 @@ country_event = {
         small_arms = 100
         leadership = 20
         add_country_modifier = {
-            name = small_country_draft
-            duration = 30
+            name = mayan_draft
+            duration = 730
         }
     }
 }
+
+
+        
      
 
      

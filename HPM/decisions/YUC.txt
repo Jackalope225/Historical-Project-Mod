@@ -10,10 +10,6 @@ political_decisions = {
             has_country_flag = support_US
 
             exists = USA
-            USA = { 
-                government = democracy 
-                war_with = MEX
-            }
 
             OR = {
                 is_vassal = no
@@ -151,8 +147,8 @@ political_decisions = {
         effect = {
             set_country_flag = beg_US
             USA = { 
-                create_vassal = THIS
-                create_alliance = THIS
+              #  create_vassal = THIS
+              #  create_alliance = THIS
                 country_event = 16406
             }
         }

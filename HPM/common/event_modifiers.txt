@@ -2583,3 +2583,12 @@ emergency_tax_measures2 = {
     global_pop_militancy_modifier = 0.10
     icon = 10
 }
+
+### Yucatan ###
+mayan_draft = {
+    pop_militancy_modifier = 0.01
+    mobilisation_size = 0.50
+    prestige = -0.02
+    war_exhaustion = -0.03
+    icon = 18
+}
